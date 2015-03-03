@@ -1,80 +1,75 @@
 html, body {
-  position: fixed;
-  background-color: gray;
-  border-collapse: collapse;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
+	position: fixed;
+	background-color: gray;
+	border-collapse: collapse;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
 }
 
 .container {
-  border-collapse: collapse;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
+	border-collapse: collapse;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.mapLoc {
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
 }
 
 #mapImageContainer {
-  position: fixed;
-  background-color: gray;
-  float: left;
-  height: 100%;
-  width: 75%;
+	position: fixed;
+	background-color: gray;
+	float: left;
+	height: 100%;
+	width: 75%;
 }
 
 #mapFrame {
-  height: 100%;
-  width: 100%;
-  overflow:hidden;
+	height: 100%;
+	width: 100%;
+	overflow:hidden;
 }
 
 #map {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: scroll;
+	position: relative;
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
 }
 
 #map img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 #sidebarContainer {
-  background-color: gray;
-  position: fixed;
-  float: right;
-  width: 25%;
-  height: 100%;
-  left: 75%;  
+	background-color: gray;
+	position: fixed;
+	float: right;
+	width: 25%;
+	height: 100%;
+	left: 75%;	
 }
 
 #sidebar {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
 }
 
 #title {
-  position: relative;
-  border-bottom: .25em solid black;
-  height: 8%;
-  width: 100%;
-  font-weight: bold;  
-}
-
-#title #t {
-  position: absolute;
-  bottom: 0px;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  font-size: xx-large;
+	border-bottom: .25em solid black;
+	height: 8%;
+	width: 100%;
+	font-weight: bold;	
 }
 
 
