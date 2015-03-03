@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="build/JSXTransformer.js"></script>
+    <script src="build/react.js"></script>
+    <script type="text/jsx">
+
+
+/** @jsx React.DOM */
+
+var Map = React.createClass({
+  getInitialState: function() {
+		return {
+      imgStyle: {},
+      imgWidth: 0,
+      imgHeight: 0
+		};
+	},
+  componentDidMount: function() {
+    var img = document.getElementById("mapImage");
+    var imgContainer = document.getElementById("map");
+    var imgWidth = img.Width;
+    var imgHeight = img.Height;
+    var excessW = imgWidth - imgContainer.clientWidth;
+    var excessH = imgHeight - imgContainer.clientHeight
+    if(excessW > excessH)
+      this.state.zoomFactor = imgContainer.clientWidth / excessW;
+    else
+      this.state.zoomFactor = imgContainer.clientHeight / excessH;
+    console.log(imgWidth);
+    imgWidth *= this.state.zoomFactor;
+    imgHeight *= this.state.zoomFactor;
+    this.state.imgStyle = {
+      width: imgWidth + "px",
+      height: imgHeight + "px"
+    }
+  },
+	render: function() {
+		return(
+      <div class="container" id="mapFrame">
+        <div class="container" id="map">
+          <img id="mapImage" src={this.props.image} style={this.state.imgStyle} />
+        </div>
+      </div>
+		);
+	}
+});
+
+var Sidebar = React.createClass({
+	getInitialState: function() {
+		return {
+		};
+	},
+	render: function() {
+		return(
+			<div class="container" id="sidebar">
+        <div id="title"><div id="t"><p>{this.props.name}</p></div></div>
+        <div id="options">
+          {this.props.options.map(function(option){
+            return <div class="sidebarOption"><p>{option}</p></div>;
+          })}
+        </div>
+        <div id="bottomBar"></div>
+			</div>
+		);
+	}
+});
+
+var WorldMap = React.createClass({
+	getInitialState: function() {
+		return {
+			map: "testImage.jpg",
+			locations: [],
+      menuOptions: []
+		};
+	},
+	render: function() {
+		var locations;
+		var children;
+		return(
+			<div class="container">
+        <div class="container" id="mapImageContainer">
+          <Map image={this.state.map} />
+        </div>
+        <div class="container" id="sidebarContainer">
+          <Sidebar name={this.props.name} options={this.state.menuOptions} />
+        </div>
+			</div>
+		);
+	}
+})
+
+React.render(
+	<WorldMap name="Korvosa"/>,
+	document.body
+);
+    
+    
+    </script>
+  </head>
+  <body ondragstart="return false;" ondrop="return false;" />
+</html>
