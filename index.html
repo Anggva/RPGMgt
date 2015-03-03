@@ -7,16 +7,14 @@
 		<script src="build/react.js"></script>
 		<script type="text/jsx">
 
-
 /** @jsx React.DOM */
 
-var WorldMap = React.createClass({
+var World = React.createClass({
 	getInitialState: function() {
 		return {
 			rootMap: {
-				mapName: "TESTMAP",
-				imageSrc: "testImage.jpg",
-				mapInfo: "",
+				mapName: "TESTMAP", mapInfo: "",
+				imageSrc: "testImage.jpg", gotoLocEnabled: true,
 				editingEnabled: true,
 				childMaps: [],
 				loc: {
@@ -25,6 +23,18 @@ var WorldMap = React.createClass({
 				}
 			}
 		};
+	},
+	addNewMap: function() {
+		this.props.currentMap.gotoLocEnabled = false;
+		// prompt for new map info, followed by prompting for location
+			// May have to change the event listener and restructure this, but the goal
+			// is to have the user pick a location and size on the map to create the new map 
+		var newLoc = {
+				parentNode: this.props.currentMap
+			};
+			this.props.currentMap.children.push(newLoc);
+			this.props.currentMap.gotoLocEnabled = true;
+			this.props.currentMap = newLoc;
 	},
 	render: function() {
 		this.props.currentMap = this.props.currentMap || this.state.rootMap;
@@ -43,12 +53,9 @@ var WorldMap = React.createClass({
 
 var MapImage = React.createClass({
 	gotoLoc: function(newNode) {
+		if(!this.props.mapNode.gotoLocEnabled)
+			return;
 		this.props.parent.props.currentMap = newNode;
-	},
-	addLoc: function(e) {
-		this.props.mapNode.children.push({
-
-		});
 	},
 	render: function() {
 		return(
@@ -85,10 +92,7 @@ var Sidebar = React.createClass({
 	}
 });
 
-React.render(
-	<WorldMap />,
-	document.body
-);
+React.render(	<World /> ,	document.body );
 		
 		</script>
 	</head>
