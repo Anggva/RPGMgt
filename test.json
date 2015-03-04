@@ -1,0 +1,8 @@
+{
+	"mapName" : "TESTMAP_JSON",
+	"mapInfo" : "",
+	"imageSrc" : "testImage2.jpg",
+	"gotoLocEnabled" : true,
+	"editingEnabled" : false,
+	"childMaps" : []
+}

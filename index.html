@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<script scr="build/jquery-1.11.2"></script>
-		<script src="build/JSXTransformer.js"></script>
-		<script src="build/react.js"></script>
-		<script type="text/jsx">
+		<link rel='stylesheet' type='text/css' href='style.css'>
+		<script scr='build/jquery-1.11.2'></script>
+		<script src='build/JSXTransformer.js'></script>
+		<script src='build/react.js'></script>
+		<script type='text/jsx'>
 
 /** @jsx React.DOM */
 
 var World = React.createClass({
-	getInitialState: function() {
+	getDefaultProps: function() {
 		return {
 			rootMap: {
-				mapName: "TESTMAP", mapInfo: "",
-				imageSrc: "testImage.jpg", gotoLocEnabled: true,
-				editingEnabled: true,
-				childMaps: [],
-				loc: {
-					X: 0, Y: 0,
-					size: 0
-				}
+				mapName: 'TESTMAP',
+				mapInfo: '',
+				imageSrc: 'testImage.jpg',
+				gotoLocEnabled: true,
+				editingEnabled: false,
+				childMaps: []
 			}
 		};
 	},
@@ -37,13 +35,13 @@ var World = React.createClass({
 			this.props.currentMap = newLoc;
 	},
 	render: function() {
-		this.props.currentMap = this.props.currentMap || this.state.rootMap;
+		this.props.currentMap = this.props.currentMap || this.props.rootMap;
 		return(
-			<div className="container">
-				<div className="container" id="mapImageContainer">
+			<div className='container'>
+				<div className='container' id='mapImageContainer'>
 					<MapImage mapNode={this.props.currentMap} parent={this} />
 				</div>
-				<div className="container" id="sidebarContainer">
+				<div className='container' id='sidebarContainer'>
 					<Sidebar mapNode={this.props.currentMap} parent={this} />
 				</div>
 			</div>
@@ -59,13 +57,13 @@ var MapImage = React.createClass({
 	},
 	render: function() {
 		return(
-			<div className="container" id="mapFrame">
-				<div className="container" id="map">
-					<img id="mapImage" src={this.props.mapNode.imageSrc} />
+			<div className='container' id='mapFrame'>
+				<div className='container' id='map'>
+					<img id='mapImage' src={this.props.mapNode.imageSrc} />
 					{this.props.mapNode.childMaps.map(function(childMap){
-						return <div className="mapLoc" onclick="gotoLoc(childMap)" style=
-							"left: childMap.loc.X, top: childMap.loc.Y,
-							width: childMap.loc.size, height: childMap.loc.size"
+						return <div className='mapLoc' onclick='gotoLoc(childMap)' style=
+							'left: childMap.loc.X, top: childMap.loc.Y,
+							width: childMap.loc.size, height: childMap.loc.size'
 						/>;
 					})}
 				</div>
@@ -77,24 +75,25 @@ var MapImage = React.createClass({
 var Sidebar = React.createClass({
 	render: function() {
 		return(
-			<div className="container" id="sidebar">
-				<div id="title"><div id="t">
+			<div className='container' id='sidebar'>
+				<div id='title'><div id='t'>
 					<h1>{this.props.mapNode.mapName}</h1>
 				</div></div>
-				<div id="mapInfo">
+				<div id='mapInfo'>
 					<p>{this.props.mapNode.mapInfo}</p>
 				</div>
-				<div id="options">
+				<div id='options'>
 				</div>
-				<div id="bottomBar"></div>
+				<div id='bottomBar'></div>
 			</div>
 		);
 	}
 });
 
-React.render(	<World /> ,	document.body );
-		
+
+React.render(<World />, document.body);
+
 		</script>
 	</head>
-	<body ondragstart="return false;" ondrop="return false;" />
+	<body ondragstart='return false;' ondrop='return false;' />
 </html>
