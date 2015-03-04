@@ -9,30 +9,31 @@
 
 /** @jsx React.DOM */
 
+function MapTreeNode (mapName,imgSrc,mapInfo) {
+	this.mapName = mapName,
+	this.imgSrc = imgSrc,
+	this.mapInfo = mapInfo,
+	childMaps = [],
+	addChild = function(newChild) {
+		// prompt for new map info, including prompting for location
+		childMaps.push(newChild);
+	}
+};
+
 var World = React.createClass({
+	getInitialState: function() {
+		return {
+			editingEnabled: false,
+			currentlyAddingMap: false
+		}
+	},
 	getDefaultProps: function() {
 		return {
-			rootMap: {
-				mapName: 'TESTMAP',
-				mapInfo: '',
-				imageSrc: 'testImage.jpg',
-				gotoLocEnabled: true,
-				editingEnabled: false,
-				childMaps: []
-			}
-		};
+			rootMap: new MapTreeNode('TESTMAP','testImage.jpg','')
+		}
 	},
-	addNewMap: function() {
-		this.props.currentMap.gotoLocEnabled = false;
-		// prompt for new map info, followed by prompting for location
-			// May have to change the event listener and restructure this, but the goal
-			// is to have the user pick a location and size on the map to create the new map 
-		var newLoc = {
-				parentNode: this.props.currentMap
-			};
-			this.props.currentMap.children.push(newLoc);
-			this.props.currentMap.gotoLocEnabled = true;
-			this.props.currentMap = newLoc;
+	changeLoc: function(loc) {
+		this.props.currentMap = loc;
 	},
 	render: function() {
 		this.props.currentMap = this.props.currentMap || this.props.rootMap;
@@ -50,11 +51,6 @@ var World = React.createClass({
 });
 
 var MapImage = React.createClass({
-	gotoLoc: function(newNode) {
-		if(!this.props.mapNode.gotoLocEnabled)
-			return;
-		this.props.parent.props.currentMap = newNode;
-	},
 	render: function() {
 		return(
 			<div className='container' id='mapFrame'>
