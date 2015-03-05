@@ -9,12 +9,12 @@
 
 /** @jsx React.DOM */
 
-function MapTreeNode (mapName,imgSrc,mapInfo) {
+function MapNode (mapName,imageSrc,mapInfo) {
 	this.mapName = mapName,
-	this.imgSrc = imgSrc,
+	this.imageSrc = imageSrc,
 	this.mapInfo = mapInfo,
-	childMaps = [],
-	addChild = function(newChild) {
+	this.childMaps = [],
+	this.addChild = function(newChild) {
 		// prompt for new map info, including prompting for location
 		childMaps.push(newChild);
 	}
@@ -29,7 +29,7 @@ var World = React.createClass({
 	},
 	getDefaultProps: function() {
 		return {
-			rootMap: new MapTreeNode('TESTMAP','testImage.jpg','')
+			rootMap: new MapNode('TESTMAP','testImage.jpg','')
 		}
 	},
 	changeLoc: function(loc) {
