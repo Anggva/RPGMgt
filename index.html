@@ -2,8 +2,11 @@
 <html>
 	<head>
 		<link rel='stylesheet' type='text/css' href='style.css'>
-		<script scr='build/jquery-1.11.2'></script>
-		<script src='build/JSXTransformer.js'></script>
+		<link rel='stylesheet' type='text/css' href='build/perfect-scrollbar.css'>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+		<script src="build/perfect-scrollbar.js"></script>
+		<script src='build/JSXTransformer.js'></script>		
 		<script src='build/react.js'></script>
 		<script type='text/jsx'>
 
@@ -24,11 +27,7 @@ var World = React.createClass({
 	getInitialState: function() {
 		return {
 			editingEnabled: false,
-			currentlyAddingMap: false
-		}
-	},
-	getDefaultProps: function() {
-		return {
+			currentlyAddingMap: false,
 			rootMap: new MapNode('TESTMAP','testImage.jpg','')
 		}
 	},
@@ -36,7 +35,7 @@ var World = React.createClass({
 		this.props.currentMap = loc;
 	},
 	render: function() {
-		this.props.currentMap = this.props.currentMap || this.props.rootMap;
+		this.props.currentMap = this.props.currentMap || this.state.rootMap;
 		return(
 			<div className='container'>
 				<div className='container' id='mapImageContainer'>
@@ -51,19 +50,21 @@ var World = React.createClass({
 });
 
 var MapImage = React.createClass({
+	componentDidMount: function() {
+		Ps.initialize(document.getElementById('mapImageContainer'), {
+			//See https://github.com/noraesae/perfect-scrollbar for info on how to use this.
+		});
+	},
 	render: function() {
 		return(
-			<div className='container' id='mapFrame'>
-				<div className='container' id='map'>
-					<img id='mapImage' src={this.props.mapNode.imageSrc} />
-					{this.props.mapNode.childMaps.map(function(childMap){
-						return <div className='mapLoc' onclick='gotoLoc(childMap)' style=
-							'left: childMap.loc.X, top: childMap.loc.Y,
-							width: childMap.loc.size, height: childMap.loc.size'
-						/>;
-					})}
-				</div>
-			</div>
+			<img id='mapImage' src={this.props.mapNode.imageSrc}>
+				{this.props.mapNode.childMaps.map(function(childMap){
+					return <div className='mapLoc' onclick='gotoLoc(childMap)' style=
+						'left: childMap.loc.X, top: childMap.loc.Y,
+						width: childMap.loc.size, height: childMap.loc.size'
+					/>;
+				})}
+			</img>			
 		);
 	}
 });
