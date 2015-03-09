@@ -12,7 +12,7 @@
 
 /** @jsx React.DOM */
 
-function MapNode (mapName,imageSrc,mapInfo) {
+function MapNode(mapName,imageSrc,mapInfo) {
 	this.mapName = mapName,
 	this.imageSrc = imageSrc,
 	this.mapInfo = mapInfo,
@@ -21,6 +21,22 @@ function MapNode (mapName,imageSrc,mapInfo) {
 		// prompt for new map info, including prompting for location
 		childMaps.push(newChild);
 	}
+};
+
+function resetImage() {
+	if( ($('#mapImage').height() > $('#mapImageContainer').height()) || 
+			($('#mapImage').width() > $('#mapImageContainer').width()) ) {
+		if( ($('#mapImage').height() - $('#mapImageContainer').height()) > 
+				($('#mapImage').width() - $('#mapImageContainer').width())) {
+			var zoomFactor = $('#mapImageContainer').height() / $('#mapImage').height();
+		} else {
+			var zoomFactor = $('#mapImageContainer').width() / $('#mapImage').width();
+		}
+		$('#mapImage').css('height', (zoomFactor * $('#mapImage').height()) + 'px');
+		$('#mapImage').css('width', (zoomFactor * $('#mapImage').width()) + 'px');
+		console.log("Image dimensions reset");
+	}
+	console.log($('#mapImage').width() + ' x ' + $('#mapImage').height());
 };
 
 var World = React.createClass({
@@ -50,21 +66,29 @@ var World = React.createClass({
 });
 
 var MapImage = React.createClass({
+	getInitialState: function() {
+		return {
+			containerElement: document.getElementById('mapImageContainer'),
+			zoomFactor: 1.0
+		}
+	},
+	componentWillMount: function() {
+	},
 	componentDidMount: function() {
+		var mapImageElement = document.getElementById('mapImage');
+		mapImageElement.addEventListener('dblclick', resetImage);
 		Ps.initialize(document.getElementById('mapImageContainer'), {
 			//See https://github.com/noraesae/perfect-scrollbar for info on how to use this.
 		});
+		//this.resetImage($('#mapImage'));
 	},
 	render: function() {
 		return(
 			<img id='mapImage' src={this.props.mapNode.imageSrc}>
 				{this.props.mapNode.childMaps.map(function(childMap){
-					return <div className='mapLoc' onclick='gotoLoc(childMap)' style=
-						'left: childMap.loc.X, top: childMap.loc.Y,
-						width: childMap.loc.size, height: childMap.loc.size'
-					/>;
+					return <div className='mapLoc' onclick='gotoLoc(childMap)' style={childMap.loc} />;
 				})}
-			</img>			
+			</img>
 		);
 	}
 });
