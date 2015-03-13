@@ -10,8 +10,6 @@
 		<script src='build/react.js'></script>
 		<script type='text/jsx'>
 
-/** @jsx React.DOM */
-
 function MapNode(mapName,imageSrc,mapInfo) {
 	this.mapName = mapName,
 	this.imageSrc = imageSrc,
@@ -24,6 +22,7 @@ function MapNode(mapName,imageSrc,mapInfo) {
 };
 
 function resetImage() {
+	/*
 	if( ($('#mapImage').height() > $('#mapImageContainer').height()) || 
 			($('#mapImage').width() > $('#mapImageContainer').width()) ) {
 		if( ($('#mapImage').height() - $('#mapImageContainer').height()) > 
@@ -37,50 +36,55 @@ function resetImage() {
 		console.log("Image dimensions reset");
 	}
 	console.log($('#mapImage').width() + ' x ' + $('#mapImage').height());
+	*/
 };
-
-var World = React.createClass({
-	getInitialState: function() {
-		return {
-			editingEnabled: false,
-			currentlyAddingMap: false,
-			rootMap: new MapNode('TESTMAP','testImage.jpg','')
-		}
-	},
-	changeLoc: function(loc) {
-		this.props.currentMap = loc;
-	},
-	render: function() {
-		this.props.currentMap = this.props.currentMap || this.state.rootMap;
-		return(
-			<div className='container'>
-				<div className='container' id='mapImageContainer'>
-					<MapImage mapNode={this.props.currentMap} parent={this} />
-				</div>
-				<div className='container' id='sidebarContainer'>
-					<Sidebar mapNode={this.props.currentMap} parent={this} />
-				</div>
-			</div>
-		);
-	}
-});
 
 var MapImage = React.createClass({
 	getInitialState: function() {
 		return {
-			containerElement: document.getElementById('mapImageContainer'),
-			zoomFactor: 1.0
+			containerElement : document.getElementById('mapImageContainer'),
+			zoomFactor : 1.0
+		}
+	},
+	getDefaultProps: function() {
+		return {
+			curDown : false,
+			curYPos : 0,
+			curXPos : 0
 		}
 	},
 	componentWillMount: function() {
+
 	},
 	componentDidMount: function() {
-		var mapImageElement = document.getElementById('mapImage');
-		mapImageElement.addEventListener('dblclick', resetImage);
+		//var mapImageElement = document.getElementById('mapImage');
+		//mapImageElement.addEventListener('dblclick', resetImage);
 		Ps.initialize(document.getElementById('mapImageContainer'), {
 			//See https://github.com/noraesae/perfect-scrollbar for info on how to use this.
 		});
 		//this.resetImage($('#mapImage'));
+		var curDown = this.props.curDown;
+		var curYPos = this.props.curYPos;
+		var curXPos = this.props.curXPos;
+		$('#mapImageContainer').mousemove(function(e){
+			if(curDown === true){
+				console.log('Scrolling');
+				$('#mapImageContainer').scrollTop(
+					$('#mapImageContainer').scrollTop() + (curYPos - e.pageY)
+				); 
+				$('#mapImageContainer').scrollLeft(
+					$('#mapImageContainer').scrollLeft() + (curXPos - e.pageX)
+				);
+			}
+		});
+		$('#mapImageContainer').mousedown(function(e){
+			curDown = true;
+			curYPos = e.pageY;
+			curXPos = e.pageX;
+		});
+		$('#mapImageContainer').mouseup(function(){
+			curDown = false;
+		});
 	},
 	render: function() {
 		return(
@@ -111,6 +115,36 @@ var Sidebar = React.createClass({
 	}
 });
 
+var World = React.createClass({
+	getInitialState: function() {
+		return {
+			editingEnabled: false,
+			currentlyAddingMap: false,
+			rootMap: new MapNode('test map','testImage.jpg','asdfasdf')
+		}
+	},
+	componentDidLoad: function() {
+		this.setState({
+			rootMap: $.getJSON("mapData.json")
+		})
+	},
+	changeLoc: function(loc) {
+		this.props.currentMap = loc;
+	},
+	render: function() {
+		this.props.currentMap = this.props.currentMap || this.state.rootMap;
+		return(
+			<div className='container'>
+				<div className='container' id='mapImageContainer'>
+					<MapImage mapNode={this.props.currentMap} parent={this} />
+				</div>
+				<div className='container' id='sidebarContainer'>
+					<Sidebar mapNode={this.props.currentMap} parent={this} />
+				</div>
+			</div>
+		);
+	}
+});
 
 React.render(<World />, document.body);
 
