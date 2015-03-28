@@ -21,36 +21,14 @@ function MapNode(mapName,imageSrc,mapInfo) {
 	}
 };
 
-function resetImage() {
-	/*
-	if( ($('#mapImage').height() > $('#mapImageContainer').height()) || 
-			($('#mapImage').width() > $('#mapImageContainer').width()) ) {
-		if( ($('#mapImage').height() - $('#mapImageContainer').height()) > 
-				($('#mapImage').width() - $('#mapImageContainer').width())) {
-			var zoomFactor = $('#mapImageContainer').height() / $('#mapImage').height();
-		} else {
-			var zoomFactor = $('#mapImageContainer').width() / $('#mapImage').width();
-		}
-		$('#mapImage').css('height', (zoomFactor * $('#mapImage').height()) + 'px');
-		$('#mapImage').css('width', (zoomFactor * $('#mapImage').width()) + 'px');
-		console.log("Image dimensions reset");
-	}
-	console.log($('#mapImage').width() + ' x ' + $('#mapImage').height());
-	*/
-};
-
 var MapImage = React.createClass({
 	getInitialState: function() {
 		return {
-			containerElement : document.getElementById('mapImageContainer'),
 			zoomFactor : 1.0
 		}
 	},
 	getDefaultProps: function() {
 		return {
-			curDown : false,
-			curYPos : 0,
-			curXPos : 0
 		}
 	},
 	componentWillMount: function() {
@@ -59,13 +37,19 @@ var MapImage = React.createClass({
 	componentDidMount: function() {
 		//var mapImageElement = document.getElementById('mapImage');
 		//mapImageElement.addEventListener('dblclick', resetImage);
+		var wDif = $('#mapImageContainer').width() - $('#mapImage').width();
+		var hDif = $('#mapImageContainer').height() - $('#mapImage').height();
+		if(wDif > 0 || hDif > 0) {
+			if(hDif > wDif) {
+				$('#mapImage').css('height','100%');
+			} else {
+				$('#mapImage').css('width','100%');
+			}
+		}
 		Ps.initialize(document.getElementById('mapImageContainer'), {
 			//See https://github.com/noraesae/perfect-scrollbar for info on how to use this.
 		});
-		//this.resetImage($('#mapImage'));
-		var curDown = this.props.curDown;
-		var curYPos = this.props.curYPos;
-		var curXPos = this.props.curXPos;
+		var curDown, curYPos, curXPos;
 		$('#mapImageContainer').mousemove(function(e){
 			if(curDown === true){
 				console.log('Scrolling');
@@ -78,9 +62,11 @@ var MapImage = React.createClass({
 			}
 		});
 		$('#mapImageContainer').mousedown(function(e){
-			curDown = true;
-			curYPos = e.pageY;
-			curXPos = e.pageX;
+			if(e.which == 2) {
+				curDown = true;
+				curYPos = e.pageY;
+				curXPos = e.pageX;
+			}
 		});
 		$('#mapImageContainer').mouseup(function(){
 			curDown = false;
