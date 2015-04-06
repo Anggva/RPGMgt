@@ -6,9 +6,19 @@
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
 		<script src="build/perfect-scrollbar.js"></script>
-		<script src='build/JSXTransformer.js'></script>		
+		<script src='build/JSXTransformer.js'></script>	
 		<script src='build/react.js'></script>
 		<script type='text/jsx'>
+
+function start() {
+	$.getJSON("mapData.json", function(data) {
+		if (!data || data.Success === false) {
+			window.alert('Error loading map data. Please refresh the page and try again.');
+		} else {
+			React.render(<World rootMap={data} />, document.body);
+		}
+	});
+}
 
 function MapNode(mapName,imageSrc,mapInfo) {
 	this.mapName = mapName,
@@ -19,20 +29,13 @@ function MapNode(mapName,imageSrc,mapInfo) {
 		// prompt for new map info, including prompting for location
 		childMaps.push(newChild);
 	}
-};
+}
 
 var MapImage = React.createClass({
 	getInitialState: function() {
 		return {
 			zoomFactor : 1.0
 		}
-	},
-	getDefaultProps: function() {
-		return {
-		}
-	},
-	componentWillMount: function() {
-
 	},
 	componentDidMount: function() {
 		//var mapImageElement = document.getElementById('mapImage');
@@ -105,21 +108,16 @@ var World = React.createClass({
 	getInitialState: function() {
 		return {
 			editingEnabled: false,
-			currentlyAddingMap: false,
-			rootMap: new MapNode('test map','testImage.jpg','asdfasdf')
+			currentlyAddingMap: false
+			//rootMap: new MapNode('test map','testImage.jpg','asdfasdf')
 		}
-	},
-	componentDidLoad: function() {
-		this.setState({
-			rootMap: $.getJSON("mapData.json")
-		})
 	},
 	changeLoc: function(loc) {
 		this.props.currentMap = loc;
 	},
 	render: function() {
-		this.props.currentMap = this.props.currentMap || this.state.rootMap;
-		return(
+		this.props.currentMap = this.props.currentMap || this.props.rootMap;
+		return (
 			<div className='container'>
 				<div className='container' id='mapImageContainer'>
 					<MapImage mapNode={this.props.currentMap} parent={this} />
@@ -132,7 +130,7 @@ var World = React.createClass({
 	}
 });
 
-React.render(<World />, document.body);
+window.addEventListener("load", start, false);
 
 		</script>
 	</head>
