@@ -57,5 +57,28 @@ html, body {
 	font-weight: bold;	
 }
 
+#mapInfo {
+	border-bottom: .15em solid black;
+	height: 30%;
+	width: 100%;
 
+}
+
+#bottomBar {
+	position:absolute;
+    bottom: 5%;
+    right:50%;
+}
+
+#bottomBar1 {
+	position:absolute;
+    bottom: 5%;
+    right:80%;
+}
+
+#locationButton {
+	padding: 0 40px;
+    padding-top: 10px;
+    height: 45px;
+}
 
