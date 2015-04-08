@@ -84,7 +84,6 @@ var MapImage = React.createClass({
 });
 
 
-var self=this;
 var Sidebar = React.createClass({
     getInitialState: function() {
     return {showForm: false}
@@ -108,7 +107,6 @@ var Sidebar = React.createClass({
 
 		return(
 			
-			<div id="results" className="search-results">
             <div className="container" id="sidebar">
             { this.state.showForm ?  <FormPage />:null }
             { this.state.showEdit ? <EditPage /> : null }
@@ -133,7 +131,6 @@ var Sidebar = React.createClass({
 					<button onClick={this.onEditClick}>Edit</button>
 				</div>
 				</div>
-      		</div>
 		);
 		
 	},
@@ -177,7 +174,7 @@ var ShowNPCList = React.createClass({
 var FormPage = React.createClass({
     render: function() {
         return (
-        	<div id="results" className="search-results">
+        	<div>
             <form>
             <div><input type="text" placeholder="Map Name" /></div>
         <div><input type="text" placeholder="Description" /></div>
@@ -195,7 +192,7 @@ var FormPage = React.createClass({
 var EditPage = React.createClass({
     render: function() {
         return (
-        	<div id="results" className="search-results">
+        	<div>
             <form>
             <div><input type="text" placeholder="Map Name" /></div>
         <div><input type="text" placeholder="Description" /></div>
