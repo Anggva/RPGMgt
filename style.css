@@ -82,3 +82,61 @@ html, body {
     height: 45px;
 }
 
+#locationButton {
+	padding: 0 20px;
+    padding-top: 10px;
+    height: 20px;
+
+}
+
+#NPCButton {
+	padding: 0 20px;
+    padding-top: 10px;
+    height: 20px;
+
+}
+
+#NameTextbox {
+
+    height: 20px;
+    width: 250px;
+    border: 3px solid #cccccc;
+}
+
+#DescTextbox {
+
+    height: 70px;
+    width: 250px;
+    border: 3px solid #cccccc;
+}
+
+#NPCTextbox {
+	border: 3px solid #cccccc;
+    height: 70px;
+    width: 250px;
+}
+
+#createButton {
+	padding: 0 20px;
+    padding-top: 60px;
+    height: 10px;
+
+}
+
+#NameDiv {
+	padding: 0 20px;
+    padding-top: 20px;
+    height: 30px;
+}
+
+#DescDiv {
+	padding: 0 20px;
+    padding-top: 40px;
+    height: 50px;
+}
+
+#NPCDiv {
+	padding: 0 20px;
+    padding-top: 60px;
+    height: 50px;
+}
