@@ -20,15 +20,8 @@ function start() {
 	});
 }
 
-function MapNode(mapName,imageSrc,mapInfo) {
-	this.mapName = mapName,
-	this.imageSrc = imageSrc,
-	this.mapInfo = mapInfo,
-	this.childMaps = [],
-	this.addChild = function(newChild) {
-		// prompt for new map info, including prompting for location
-		childMaps.push(newChild);
-	}
+function MapNode(parent) {
+	this.parentMap = parent;
 }
 
 var MapImage = React.createClass({
@@ -99,17 +92,49 @@ var DefaultSidebar = React.createClass({
 				<div id='options'>
 				</div>
 				<div id='bottomBar'>
+					<button onClick={this.props.parent.editMap}>Edit</button>
 				</div>
 			</div>
 		);
 	}
 });
 
-var NewMapSidebar = React.createClass({
+var EditSidebar = React.createClass({
+	getInitialState: function() {
+		return {Name: 'Name Here'}
+			{Description: 'Description Here'}
+			{NPC: 'NPC Here'};
+	},
+	finishEditing: function() {
+		this.props.mapToEdit.mapName = 
+			document.getElementById("NameTextbox").value;
+		this.props.mapToEdit.mapInfo =
+			document.getElementById("DescTextbox").value;
+		this.props.parent.setState({editingEnabled : false});
+	},
+	nameChange: function(event) {
+		this.setState({Name: event.target.value});
+	},
+	descChange: function(event) {
+		this.setState({Description: event.target.value});
+	},
 	render: function() {
 		return (
 			<div className='container' id='sidebar'>
-				
+				<form>
+					<div id="NameDiv">
+						<input id="NameTextbox" type="text" placeholder="Map Name" />
+					</div>
+					<div id="DescDiv">
+						<textarea id="DescTextbox" placeholder="Description" />
+					</div>
+				</form>
+				<div id="createButton">
+					<input type="submit" value="Confirm Edit" onClick={this.finishEditing}/>
+				</div>
+				<div id="bottomBar">
+					<button>Back</button>
+				</div>
 			</div>
 		);
 	}
@@ -118,13 +143,22 @@ var NewMapSidebar = React.createClass({
 var World = React.createClass({
 	getInitialState: function() {
 		return {
-			editingEnabled: false,
-			currentlyAddingMap: false
+			editingEnabled: false
 			//rootMap: new MapNode('test map','testImage.jpg','asdfasdf')
 		}
 	},
 	changeLoc: function(loc) {
 		this.props.currentMap = loc;
+	},
+	addNewLoc: function() {
+		this.props.mapToEdit = new MapNode(this.props.currentMap);
+		this.props.currentMap.childMaps.push(this.props.mapToEdit);
+		this.setState({editingEnabled : true});
+	},
+	editMap: function() {
+		console.log("Edit button pressed");
+		this.props.mapToEdit = this.props.currentMap;
+		this.setState({editingEnabled : true});
 	},
 	render: function() {
 		this.props.currentMap = this.props.currentMap || this.props.rootMap;
@@ -134,7 +168,9 @@ var World = React.createClass({
 					<MapImage mapNode={this.props.currentMap} parent={this} />
 				</div>
 				<div className='container' id='sidebarContainer'>
-					{this.state.currentlyAddingMap ? <NewMapSidebar /> : <DefaultSidebar mapNode={this.props.currentMap} parent={this} />}
+					{this.state.editingEnabled ? 
+							<EditSidebar mapToEdit={this.props.mapToEdit} parent={this}/> : 
+							<DefaultSidebar mapNode={this.props.currentMap} parent={this} />}
 				</div>
 			</div>
 		);
