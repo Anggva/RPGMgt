@@ -1,76 +1,187 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<script scr="build/jquery-1.11.2"></script>
-		<script src="build/JSXTransformer.js"></script>
-		<script src="build/react.js"></script>
-		<script type="text/jsx">
+		<title>RPG Campaign Management System</title>
+		<link rel='stylesheet' type='text/css' href='style.css'>
+		<link rel='stylesheet' type='text/css' href='build/perfect-scrollbar.css'>
+		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+		<script src="build/perfect-scrollbar.js"></script>
+		<script src='build/JSXTransformer.js'></script>	
+		<script src='build/react.js'></script>
+		<script type='text/jsx'>
 
+function start() {
+	$.getJSON("mapData.json", function(data) {
+		if (!data || data.Success === false) {
+			window.alert('Error loading map data. Please refresh the page and try again.');
+		} else {
+			React.render(<World rootMap={data} />, document.body);
+		}
+	});
+}
 
-/** @jsx React.DOM */
+function MapNode(parent) {
+	this.parentMap = parent;
+}
 
-var Map = React.createClass({
-	zoom: function(e) {
-		var e = e || window.event;
-		console.log("Click on map detected.");
-	},
-	render: function() {
-		return(
-			<div class="container" id="map">
-				<img id="mapImage" src={this.props.image} onClick={this.zoom} />
-			</div>
-		);
-	}
-});
-
-var Sidebar = React.createClass({
-	render: function() {
-		return(
-			<div class="container" id="sidebar">
-				<div id="title"><div id="t"><p>{this.props.name}</p></div></div>
-				<div id="options">
-					{this.props.options.map(function(option){
-						return <div class="sidebarOption"><p>{option}</p></div>;
-					})}
-				</div>
-				<div id="bottomBar"></div>
-			</div>
-		);
-	}
-});
-
-var WorldMap = React.createClass({
-	getDefaultProps: function() {
+var MapImage = React.createClass({
+	getInitialState: function() {
 		return {
-			name: "Korvosa",
-			map: "testImage.jpg",
-			locations: [],
-			menuOptions: []
-		};
+			zoomFactor : 1.0
+		}
+	},
+	componentDidMount: function() {
+		//var mapImageElement = document.getElementById('mapImage');
+		//mapImageElement.addEventListener('dblclick', resetImage);
+		var wDif = $('#mapImageContainer').width() - $('#mapImage').width();
+		var hDif = $('#mapImageContainer').height() - $('#mapImage').height();
+		if(wDif > 0 || hDif > 0) {
+			if(hDif > wDif) {
+				$('#mapImage').css('height','100%');
+			} else {
+				$('#mapImage').css('width','100%');
+			}
+		}
+		Ps.initialize(document.getElementById('mapImageContainer'), {
+			//See https://github.com/noraesae/perfect-scrollbar for info on how to use this.
+		});
+		var curDown, curYPos, curXPos;
+		$('#mapImageContainer').mousemove(function(e){
+			if(curDown === true){
+				console.log('Scrolling');
+				$('#mapImageContainer').scrollTop(
+					$('#mapImageContainer').scrollTop() + (curYPos - e.pageY)
+				); 
+				$('#mapImageContainer').scrollLeft(
+					$('#mapImageContainer').scrollLeft() + (curXPos - e.pageX)
+				);
+			}
+		});
+		$('#mapImageContainer').mousedown(function(e){
+			if(e.which == 2) {
+				curDown = true;
+				curYPos = e.pageY;
+				curXPos = e.pageX;
+			}
+		});
+		$('#mapImageContainer').mouseup(function(){
+			curDown = false;
+		});
 	},
 	render: function() {
 		return(
-			<div class="container">
-				<div class="container" id="mapImageContainer">
-					<div class="container" id="mapFrame">
-						<Map image={this.props.map} />
-					</div>
+			<img id='mapImage' src={this.props.mapNode.imageSrc}>
+				{this.props.mapNode.childMaps.map(function(childMap){
+					return <div className='mapLoc' onclick='gotoLoc(childMap)' style={childMap.loc} />;
+				})}
+			</img>
+		);
+	}
+});
+
+var DefaultSidebar = React.createClass({
+	render: function() {
+		return (
+			<div className='container' id='sidebar'>
+				<div id='title'><div id='t'>
+					<h1>{this.props.mapNode.mapName}</h1>
+				</div></div>
+				<div id='mapInfo'>
+					<p>{this.props.mapNode.mapInfo}</p>
 				</div>
-				<div class="container" id="sidebarContainer">
-					<Sidebar name={this.props.name} options={this.props.menuOptions} />
+				<div id='options'>
+				</div>
+				<div id='bottomBar'>
+					<button onClick={this.props.parent.editMap}>Edit</button>
 				</div>
 			</div>
 		);
 	}
-})
+});
 
-React.render(
-	<WorldMap />,
-	document.body
-);
-		
+var EditSidebar = React.createClass({
+	getInitialState: function() {
+		return {Name: 'Name Here'}
+			{Description: 'Description Here'}
+			{NPC: 'NPC Here'};
+	},
+	finishEditing: function() {
+		this.props.mapToEdit.mapName = 
+			document.getElementById("NameTextbox").value;
+		this.props.mapToEdit.mapInfo =
+			document.getElementById("DescTextbox").value;
+		this.props.parent.setState({editingEnabled : false});
+	},
+	nameChange: function(event) {
+		this.setState({Name: event.target.value});
+	},
+	descChange: function(event) {
+		this.setState({Description: event.target.value});
+	},
+	render: function() {
+		return (
+			<div className='container' id='sidebar'>
+				<form>
+					<div id="NameDiv">
+						<input id="NameTextbox" type="text" placeholder="Map Name" />
+					</div>
+					<div id="DescDiv">
+						<textarea id="DescTextbox" placeholder="Description" />
+					</div>
+				</form>
+				<div id="createButton">
+					<input type="submit" value="Confirm Edit" onClick={this.finishEditing}/>
+				</div>
+				<div id="bottomBar">
+					<button>Back</button>
+				</div>
+			</div>
+		);
+	}
+});
+
+var World = React.createClass({
+	getInitialState: function() {
+		return {
+			editingEnabled: false
+			//rootMap: new MapNode('test map','testImage.jpg','asdfasdf')
+		}
+	},
+	changeLoc: function(loc) {
+		this.props.currentMap = loc;
+	},
+	addNewLoc: function() {
+		this.props.mapToEdit = new MapNode(this.props.currentMap);
+		this.props.currentMap.childMaps.push(this.props.mapToEdit);
+		this.setState({editingEnabled : true});
+	},
+	editMap: function() {
+		console.log("Edit button pressed");
+		this.props.mapToEdit = this.props.currentMap;
+		this.setState({editingEnabled : true});
+	},
+	render: function() {
+		this.props.currentMap = this.props.currentMap || this.props.rootMap;
+		return (
+			<div className='container'>
+				<div className='container' id='mapImageContainer'>
+					<MapImage mapNode={this.props.currentMap} parent={this} />
+				</div>
+				<div className='container' id='sidebarContainer'>
+					{this.state.editingEnabled ? 
+							<EditSidebar mapToEdit={this.props.mapToEdit} parent={this}/> : 
+							<DefaultSidebar mapNode={this.props.currentMap} parent={this} />}
+				</div>
+			</div>
+		);
+	}
+});
+
+window.addEventListener("load", start, false);
+
 		</script>
 	</head>
-	<body ondragstart="return false;" ondrop="return false;" />
+	<body ondragstart='return false;' ondrop='return false;' />
 </html>

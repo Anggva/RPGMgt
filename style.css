@@ -1,81 +1,146 @@
 html, body {
-  position: fixed;
-  background-color: gray;
-  border-collapse: collapse;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
+	position: fixed;
+	background-color: gray;
+	border-collapse: collapse;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
 }
 
+
 .container {
-  border-collapse: collapse;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
+	border-collapse: collapse;
+	border: 1px solid black;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.mapLoc {
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
 }
 
 #mapImageContainer {
-  position: fixed;
-  background-color: gray;
-  float: left;
-  height: 100%;
-  width: 75%;
+	position: relative;
+	float: left;
+	height: 100%;
+	width: 75%;
+	overflow: scroll;
 }
 
-#mapFrame {
-  height: 100%;
-  width: 100%;
-  overflow:hidden;
-}
-
-#map {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: scroll;
-}
-
-#map img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#mapImage {
+	position: absolute;
+	
 }
 
 #sidebarContainer {
-  background-color: gray;
-  position: fixed;
-  float: right;
-  width: 25%;
-  height: 100%;
-  left: 75%;  
+	position: fixed;
+	float: right;
+	width: 25%;
+	height: 100%;
+	left: 75%;	
 }
 
 #sidebar {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
+	background-image: url("img/sidebar_bckgd.jpg");
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
 }
 
 #title {
-  position: relative;
-  border-bottom: .25em solid black;
-  height: 8%;
-  width: 100%;
-  font-weight: bold;  
+	border-bottom: .25em solid black;
+	height: 8%;
+	width: 100%;
+	font-weight: bold;
+	font-family: 'Playfair Display', serif;
+	color: white;	
 }
 
-#title #t {
-  position: absolute;
-  bottom: 0px;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  font-size: xx-large;
+#mapInfo {
+	border-bottom: .15em solid black;
+	height: 30%;
+	width: 100%;
+
 }
 
+#bottomBar {
+	position:absolute;
+    bottom: 5%;
+    right:50%;
+}
 
+#bottomBar1 {
+	position:absolute;
+    bottom: 5%;
+    right:80%;
+}
 
+#locationButton {
+	padding: 0 40px;
+    padding-top: 10px;
+    height: 45px;
+}
+
+#locationButton {
+	padding: 0 20px;
+    padding-top: 10px;
+    height: 20px;
+
+}
+
+#NPCButton {
+	padding: 0 20px;
+    padding-top: 10px;
+    height: 20px;
+
+}
+
+#NameTextbox {
+
+    height: 20px;
+    width: 250px;
+    border: 3px solid #cccccc;
+}
+
+#DescTextbox {
+
+    height: 70px;
+    width: 250px;
+    border: 3px solid #cccccc;
+}
+
+#NPCTextbox {
+	border: 3px solid #cccccc;
+    height: 70px;
+    width: 250px;
+}
+
+#createButton {
+	padding: 0 20px;
+    padding-top: 60px;
+    height: 10px;
+
+}
+
+#NameDiv {
+	padding: 0 20px;
+    padding-top: 20px;
+    height: 30px;
+}
+
+#DescDiv {
+	padding: 0 20px;
+    padding-top: 40px;
+    height: 50px;
+}
+
+#NPCDiv {
+	padding: 0 20px;
+    padding-top: 60px;
+    height: 50px;
+}
