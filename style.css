@@ -74,6 +74,12 @@ html, body {
     right:50%;
 }
 
+#backButton {
+	position:absolute;
+    bottom: 60%;
+    right:42%;
+}
+
 #bottomBar1 {
 	position:absolute;
     bottom: 5%;
