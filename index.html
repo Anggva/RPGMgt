@@ -124,7 +124,7 @@ var DefaultSidebar = React.createClass({
 				<div id='options'>
 				</div>
 				<div id='bottomBar'>
-					<button>+</button>
+					<button onClick={this.props.parent.addNewLoc}>+</button>
 					<button onClick={this.props.parent.editMap}>Edit</button>
 				</div>
 			</div>
@@ -206,14 +206,14 @@ var EditSidebar = React.createClass({
 			<div className='container' id='sidebar'>
 				<form>
 					<div id="NameDiv">
-						<input id="NameTextbox" type="text" placeholder="Map Name" />
+						<input id="NameTextbox" type="text" placeholder="Map Name" defaultValue={this.props.mapNode.mapName}/>
 					</div>
 					<div id="DescDiv">
-						<textarea id="DescTextbox" placeholder="Description" />
+						<textarea id="DescTextbox" placeholder="Description" defaultValue={this.props.mapNode.mapInfo}/>
 					</div>
 				</form>
 				<div id="createButton">
-					<input type="submit" value="Confirm Edit" onClick={this.finishEditing}/>
+					<input type="submit" value="Confirm" onClick={this.finishEditing}/>
 				</div>
 				<div id="backButton">
 					<button onClick={this.goBack}>Back</button>
@@ -227,7 +227,6 @@ var World = React.createClass({
 	getInitialState: function() {
 		return {
 			editingEnabled: false
-			//rootMap: new MapNode('test map','testImage.jpg','asdfasdf')
 		}
 	},
 	changeLoc: function(loc) {
@@ -252,7 +251,7 @@ var World = React.createClass({
 				</div>
 				<div className='container' id='sidebarContainer'>
 					{this.state.editingEnabled ? 
-							<EditSidebar mapToEdit={this.props.mapToEdit} parent={this}/> : 
+							<EditSidebar mapToEdit={this.props.mapToEdit} mapNode={this.props.currentMap} parent={this}/> : 
 							<DefaultSidebar mapNode={this.props.currentMap} parent={this} />}
 				</div>
 			</div>
