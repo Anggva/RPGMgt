@@ -14,6 +14,7 @@
 		<script type='text/jsx'>
 
 function start() {
+
 	$.getJSON("mapData.json", function(data) {
 		if (!data || data.Success === false) {
 			window.alert('Error loading map data. Please refresh the page and try again.');
@@ -95,6 +96,7 @@ var DefaultSidebar = React.createClass({
 				<div id='options'>
 				</div>
 				<div id='bottomBar'>
+					<button>+</button>
 					<button onClick={this.props.parent.editMap}>Edit</button>
 				</div>
 			</div>
@@ -121,6 +123,9 @@ var EditSidebar = React.createClass({
 	descChange: function(event) {
 		this.setState({Description: event.target.value});
 	},
+	goBack: function() {
+		this.props.parent.setState({editingEnabled : false});
+	},
 	render: function() {
 		return (
 			<div className='container' id='sidebar'>
@@ -135,8 +140,8 @@ var EditSidebar = React.createClass({
 				<div id="createButton">
 					<input type="submit" value="Confirm Edit" onClick={this.finishEditing}/>
 				</div>
-				<div id="bottomBar">
-					<button>Back</button>
+				<div id="backButton">
+					<button onClick={this.goBack}>Back</button>
 				</div>
 			</div>
 		);
