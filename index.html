@@ -84,6 +84,26 @@ var MapImage = React.createClass({
 });
 
 var DefaultSidebar = React.createClass({
+	getInitialState: function() {
+    return {showForm: false}
+    {showEdit: false}
+    {showNPC: false}
+    {showLoc: false};
+ 	 },
+ 	 onClick: function() {
+        this.setState({ showForm: true });
+    },
+  	onLocClick: function() {
+        this.setState({ showLoc: true });
+        this.setState({ showNPC: false });
+    },
+    onNPCClick: function() {
+        this.setState({ showNPC: true });
+        this.setState({ showLoc: false });
+    },
+    onEditClick: function() {
+        this.setState({ showEdit: true });
+    },
 	render: function() {
 		return (
 			<div className='container' id='sidebar'>
@@ -93,6 +113,14 @@ var DefaultSidebar = React.createClass({
 				<div id='mapInfo'>
 					<p>{this.props.mapNode.mapInfo}</p>
 				</div>
+				<div id="locationButton">
+					<button type="button" onClick={this.onLocClick}>Location</button>
+				</div>
+				{ this.state.showLoc ? <ShowLocList /> : null }
+				<div id="NPCButton">
+					<button type="button" onClick={this.onNPCClick}>NPC</button>
+				</div>
+				{ this.state.showNPC ? <ShowNPCList /> : null }
 				<div id='options'>
 				</div>
 				<div id='bottomBar'>
@@ -102,6 +130,53 @@ var DefaultSidebar = React.createClass({
 			</div>
 		);
 	}
+});
+
+var LocationList = React.createClass({
+  	render: function() {
+    	var createItem = function(itemText, index) {
+      		return <li key={index + itemText}>{itemText}</li>;
+    	};
+    return <ul>{this.props.items.map(createItem)}</ul>;
+  	}
+});
+
+var ShowLocList = React.createClass({
+	getInitialState: function() {
+    	return {items: ['Loc1','Loc2','Loc3']}
+  	},
+  	highlight: function() {
+    	alert('highlightedLoc');
+  	},
+  	unHighlight: function() {
+    	alert('unHighlightedLoc');
+  	},
+  	render: function() {
+    	return (
+            <div onMouseEnter={this.highlight} onMouseLeave={this.unHighlight}>
+            <LocationList items={this.state.items} />
+            </div>
+      	);
+  	}
+});
+
+var ShowNPCList = React.createClass({
+	getInitialState: function() {
+    	return {items: ['NPC1','NPC2','NPC3']}
+  	},
+  	highlight: function() {
+    	alert('highlightedNPC');
+  	},
+  	unHighlight: function() {
+    	alert('unHighlightedNPC');
+  	},
+  	render: function() {
+    	return (
+            <div onMouseEnter={this.highlight} onMouseLeave={this.unHighlight}>
+            <LocationList items={this.state.items} />
+            </div>
+      	);
+  	}
 });
 
 var EditSidebar = React.createClass({
