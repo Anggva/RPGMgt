@@ -1,8 +1,30 @@
 {
 	"mapName" : "TESTMAP_JSON",
-	"mapInfo" : "",
+	"mapInfo" : "Test info",
 	"imageSrc" : "testImage2.jpg",
 	"gotoLocEnabled" : true,
 	"editingEnabled" : false,
-	"childMaps" : []
+  "npcList" : [
+    "Richorn",
+    "Madame",
+    "Fanghammer"
+  ],
+	"childMaps" : [
+    {
+      "mapName" : "TESTMAP_JSON1",
+      "mapInfo" : "Test info",
+      "imageSrc" : "testImage2.jpg",
+      "gotoLocEnabled" : true,
+      "editingEnabled" : false,
+      "childMaps" : []
+    },
+    {
+      "mapName" : "TESTMAP_JSON2",
+      "mapInfo" : "Test info",
+      "imageSrc" : "testImage2.jpg",
+      "gotoLocEnabled" : true,
+      "editingEnabled" : false,
+      "childMaps" : []
+    }
+	]
 }

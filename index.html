@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,7 +13,6 @@
 		<script type='text/jsx'>
 
 function start() {
-
 	$.getJSON("mapData.json", function(data) {
 		if (!data || data.Success === false) {
 			window.alert('Error loading map data. Please refresh the page and try again.');
@@ -85,42 +83,47 @@ var MapImage = React.createClass({
 
 var DefaultSidebar = React.createClass({
 	getInitialState: function() {
-    return {showForm: false}
-    {showEdit: false}
-    {showNPC: false}
-    {showLoc: false};
- 	 },
- 	 onClick: function() {
-        this.setState({ showForm: true });
-    },
-  	onLocClick: function() {
-        this.setState({ showLoc: true });
-        this.setState({ showNPC: false });
-    },
-    onNPCClick: function() {
-        this.setState({ showNPC: true });
-        this.setState({ showLoc: false });
-    },
-    onEditClick: function() {
-        this.setState({ showEdit: true });
-    },
+		return {
+			infoPaneContents : <p />
+		}
+	},
+	onDesClick: function() {
+		this.setState({
+			infoPaneContents : <p>{this.props.mapNode.mapInfo}</p>
+		})
+	},
+	onLocClick: function() {
+		this.setState({
+			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap){
+				return <p>{childMap.mapName}</p>;
+			})
+		})
+	},
+	onNpcClick: function() {
+		this.setState({
+			infoPaneContents : this.props.mapNode.npcList.map(function(npc){
+				return <p>{npc}</p>;
+			})
+		})
+	},
 	render: function() {
 		return (
 			<div className='container' id='sidebar'>
 				<div id='title'><div id='t'>
 					<h1>{this.props.mapNode.mapName}</h1>
 				</div></div>
-				<div id='mapInfo'>
-					<p>{this.props.mapNode.mapInfo}</p>
+				<div id='infoPane'>
+					{this.state.infoPaneContents}
+				</div>
+				<div id="mapDesButton">
+					<button type="button" onClick={this.onDesClick}>Description</button>
 				</div>
 				<div id="locationButton">
 					<button type="button" onClick={this.onLocClick}>Location</button>
 				</div>
-				{ this.state.showLoc ? <ShowLocList /> : null }
-				<div id="NPCButton">
-					<button type="button" onClick={this.onNPCClick}>NPC</button>
+				<div id="npcButton">
+					<button type="button" onClick={this.onNpcClick}>NPC</button>
 				</div>
-				{ this.state.showNPC ? <ShowNPCList /> : null }
 				<div id='options'>
 				</div>
 				<div id='bottomBar'>
@@ -132,58 +135,13 @@ var DefaultSidebar = React.createClass({
 	}
 });
 
-var LocationList = React.createClass({
-  	render: function() {
-    	var createItem = function(itemText, index) {
-      		return <li key={index + itemText}>{itemText}</li>;
-    	};
-    return <ul>{this.props.items.map(createItem)}</ul>;
-  	}
-});
-
-var ShowLocList = React.createClass({
-	getInitialState: function() {
-    	return {items: ['Loc1','Loc2','Loc3']}
-  	},
-  	highlight: function() {
-    	alert('highlightedLoc');
-  	},
-  	unHighlight: function() {
-    	alert('unHighlightedLoc');
-  	},
-  	render: function() {
-    	return (
-            <div onMouseEnter={this.highlight} onMouseLeave={this.unHighlight}>
-            <LocationList items={this.state.items} />
-            </div>
-      	);
-  	}
-});
-
-var ShowNPCList = React.createClass({
-	getInitialState: function() {
-    	return {items: ['NPC1','NPC2','NPC3']}
-  	},
-  	highlight: function() {
-    	alert('highlightedNPC');
-  	},
-  	unHighlight: function() {
-    	alert('unHighlightedNPC');
-  	},
-  	render: function() {
-    	return (
-            <div onMouseEnter={this.highlight} onMouseLeave={this.unHighlight}>
-            <LocationList items={this.state.items} />
-            </div>
-      	);
-  	}
-});
-
 var EditSidebar = React.createClass({
 	getInitialState: function() {
-		return {Name: 'Name Here'}
-			{Description: 'Description Here'}
-			{NPC: 'NPC Here'};
+		return {
+			Name: 'Name Here',
+			Description: 'Description Here',
+			NPC: 'NPC Here'
+		}
 	},
 	finishEditing: function() {
 		this.props.mapToEdit.mapName = 
@@ -233,6 +191,7 @@ var World = React.createClass({
 		this.props.currentMap = loc;
 	},
 	addNewLoc: function() {
+		console.log("+ button pressed");
 		this.props.mapToEdit = new MapNode(this.props.currentMap);
 		this.props.currentMap.childMaps.push(this.props.mapToEdit);
 		this.setState({editingEnabled : true});
