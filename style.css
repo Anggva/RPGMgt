@@ -76,8 +76,14 @@ html, body {
 
 #backButton {
 	position:absolute;
-    bottom: 60%;
-    right:43%;
+    bottom: 55%;
+    right:46%;
+}
+
+#uploadButton {
+	position:absolute;
+    bottom: 70%;
+    right:10%;
 }
 
 #bottomBar1 {
@@ -87,23 +93,26 @@ html, body {
 }
 
 #locationButton {
-	padding: 0 40px;
-    padding-top: 10px;
-    height: 45px;
+	position:absolute;
+    bottom: 60%;
+    right:40%;
 }
 
-#locationButton {
-	padding: 0 20px;
-    padding-top: 10px;
-    height: 20px;
-
+#mapDesButton {
+	position:absolute;
+    bottom: 65%;
+    right:38%;
 }
 
 #NPCButton {
-	padding: 0 20px;
-    padding-top: 10px;
-    height: 20px;
+	position:absolute;
+    bottom: 55%;
+    right:43%;
 
+}
+
+#WhiteText {
+	color: #FFFFFF;
 }
 
 #NameTextbox {
@@ -127,9 +136,9 @@ html, body {
 }
 
 #createButton {
-	padding: 0 20px;
-    padding-top: 60px;
-    height: 10px;
+	position:absolute;
+    bottom: 60%;
+    right:43%;
 
 }
 
