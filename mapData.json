@@ -2,8 +2,6 @@
 	"mapName" : "TESTMAP_JSON",
 	"mapInfo" : "Test info",
 	"imageSrc" : "testImage2.jpg",
-	"gotoLocEnabled" : true,
-	"editingEnabled" : false,
   "npcList" : [
     "Richorn",
     "Madame",
@@ -12,18 +10,14 @@
 	"childMaps" : [
     {
       "mapName" : "TESTMAP_JSON1",
-      "mapInfo" : "Test info",
-      "imageSrc" : "testImage2.jpg",
-      "gotoLocEnabled" : true,
-      "editingEnabled" : false,
+      "mapInfo" : "Test info1",
+      "imageSrc" : "testImage1.jpg",
       "childMaps" : []
     },
     {
       "mapName" : "TESTMAP_JSON2",
       "mapInfo" : "Test info",
-      "imageSrc" : "testImage2.jpg",
-      "gotoLocEnabled" : true,
-      "editingEnabled" : false,
+      "imageSrc" : "testImage1.jpg",
       "childMaps" : []
     }
 	]
