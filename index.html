@@ -156,6 +156,16 @@ var EditSidebar = React.createClass({
 			document.getElementById("DescTextbox").value;
 		this.props.parent.setState({editingEnabled : false});
 	},
+	upload: function(){
+    	var reader  = new FileReader();
+    	var file    = document.querySelector('input[type=file]').files[0];
+       	reader.onloadend = function () {
+           document.getElementById("mapImage").src = reader.result;
+       	}
+       	if (file) {
+           reader.readAsDataURL(file); //reads the data as a URL
+       	} 	
+	},
 	nameChange: function(event) {
 		this.setState({Name: event.target.value});
 	},
@@ -178,6 +188,9 @@ var EditSidebar = React.createClass({
 				</form>
 				<div id="createButton">
 					<input type="submit" value="Confirm" onClick={this.finishEditing}/>
+				</div>
+				<div id="uploadButton">
+					<input id="uploadButton" type="file" value="Upload" onChange={this.upload}/>
 				</div>
 				<div id="backButton">
 					<button onClick={this.goBack}>Back</button>
