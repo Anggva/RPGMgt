@@ -74,7 +74,7 @@ var MapImage = React.createClass({
 		return(
 			<img id='mapImage' src={this.props.mapNode.imageSrc}>
 				{this.props.mapNode.childMaps.map(function(childMap){
-					return <div className='mapLoc' onclick='gotoLoc(childMap)' style={childMap.loc} />;
+					return <div id={childMap.mapName} className='mapLoc' onclick='gotoLoc(childMap)' style={childMap.loc} />;
 				})}
 			</img>
 		);
@@ -105,6 +105,12 @@ var DefaultSidebar = React.createClass({
 				return <p>{npc}</p>;
 			})
 		})
+	},
+	onLocMouseOver: function(e) {
+
+	},
+	onLocMouseOut: function(e) {
+
 	},
 	render: function() {
 		return (
