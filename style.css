@@ -70,8 +70,8 @@ html, body {
 
 #bottomBar {
 	position:absolute;
-    bottom: 5%;
-    right:50%;
+    bottom: 15%;
+    right:40%;
 }
 
 #backButton {
@@ -84,6 +84,7 @@ html, body {
 	position:absolute;
     bottom: 70%;
     right:10%;
+    color: #FFFFFF;
 }
 
 #bottomBar1 {
