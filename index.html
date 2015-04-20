@@ -60,7 +60,7 @@ var MapImage = React.createClass({
 			}
 		});
 		$('#mapImageContainer').mousedown(function(e){
-			if(e.which == 1) {
+			if(e.which == 2) {
 				curDown = true;
 				curYPos = e.pageY;
 				curXPos = e.pageX;
@@ -74,7 +74,7 @@ var MapImage = React.createClass({
 		return(
 			<img id='mapImage' src={this.props.mapNode.imageSrc}>
 				{this.props.mapNode.childMaps.map(function(childMap){
-					return <div id={childMap.mapName} className='mapLoc' style={childMap.loc} />;
+					return <div id={childMap.mapName} className='mapLoc' onclick='gotoLoc(childMap)' style={childMap.loc} />;
 				})}
 			</img>
 		);
@@ -94,16 +94,9 @@ var DefaultSidebar = React.createClass({
 	},
 	onLocClick: function() {
 		this.setState({
-			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap,i) {
-				return (
-					<button key={i} onClick={function(){
-						console.log('Current map changed.');
-						this.props.parent.currentMap = childMap;
-					}.bind(this)}>
-						<p>{childMap.mapName}</p>
-					</button>
-				);
-			}.bind(this))
+			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap){
+				return <p>{childMap.mapName}</p>;
+			})
 		})
 	},
 	onNpcClick: function() {
@@ -112,6 +105,12 @@ var DefaultSidebar = React.createClass({
 				return <p>{npc}</p>;
 			})
 		})
+	},
+	onLocMouseOver: function(e) {
+
+	},
+	onLocMouseOut: function(e) {
+
 	},
 	render: function() {
 		return (
@@ -157,15 +156,15 @@ var EditSidebar = React.createClass({
 			document.getElementById("DescTextbox").value;
 		this.props.parent.setState({editingEnabled : false});
 	},
-	uploadImage: function(){
-		var reader = new FileReader();
-		var file = document.querySelector('input[type=file]').files[0];
-		reader.onloadend = function() {
-			this.props.mapToEdit.imageSrc = reader.result;
-		}.bind(this);
-		if (file) {
-			reader.readAsDataURL(file); //reads the data as a URL
-		}
+	upload: function(){
+    	var reader  = new FileReader();
+    	var file    = document.querySelector('input[type=file]').files[0];
+       	reader.onloadend = function () {
+           document.getElementById("mapImage").src = reader.result;
+       	}
+       	if (file) {
+           reader.readAsDataURL(file); //reads the data as a URL
+       	} 	
 	},
 	nameChange: function(event) {
 		this.setState({Name: event.target.value});
@@ -191,7 +190,7 @@ var EditSidebar = React.createClass({
 					<input type="submit" value="Confirm" onClick={this.finishEditing}/>
 				</div>
 				<div id="uploadButton">
-					<input id="uploadButton" type="file" value="Upload" onChange={this.uploadImage}/>
+					<input id="uploadButton" type="file" value="Upload" onChange={this.upload}/>
 				</div>
 				<div id="backButton">
 					<button onClick={this.goBack}>Back</button>
@@ -208,7 +207,6 @@ var World = React.createClass({
 		}
 	},
 	changeLoc: function(loc) {
-		console.log("Changing location.");
 		this.props.currentMap = loc;
 	},
 	addNewLoc: function() {
