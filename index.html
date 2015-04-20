@@ -100,9 +100,9 @@ var DefaultSidebar = React.createClass({
 	onLocClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap,i){
-				return <button key={i} id={i} onClick={this.props.parent.changeLoc}>
+				return <div><button key={i} id={i} onClick={this.props.parent.changeLoc}>
 					{childMap.mapName}
-				</button>;
+				</button><br /></div>;
 			}.bind(this))
 		})
 	},
@@ -174,11 +174,10 @@ var EditSidebar = React.createClass({
 			reader.readAsDataURL(file); //reads the data as a URL
 		} 	
 	},
-	nameChange: function(event) {
-		this.setState({Name: event.target.value});
-	},
-	descChange: function(event) {
-		this.setState({Description: event.target.value});
+	addNPC: function() {
+		var npc = document.getElementById("npcTxtBox").value;
+		this.props.mapToEdit.npcList.push(npc);
+		$('#NPCresponse').html("<p>NPC: " + npc + " added.</p>");
 	},
 	goBack: function() {
 		this.props.parent.setState({editingEnabled : false});
@@ -194,6 +193,11 @@ var EditSidebar = React.createClass({
 						<textarea id="DescTextbox" placeholder="Description" defaultValue={this.props.mapNode.mapInfo}/>
 					</div>
 				</form>
+				<div id="NPCDiv">
+					<input id="npcTxtBox" type="text" /> 
+					<button onClick={this.addNPC}>Add NPC</button>
+					<div id="NPCresponse" />
+				</div>
 				<div id="createButton">
 					<input type="submit" value="Confirm" onClick={this.finishEditing}/>
 				</div>
