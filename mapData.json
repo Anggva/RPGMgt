@@ -1,7 +1,7 @@
 {
-	"mapName" : "TESTMAP_JSON",
-	"mapInfo" : "Test info",
-	"imageSrc" : "testImage2.jpg",
+	"mapName" : "Golarion",
+	"mapInfo" : "This is the world map",
+	"imageSrc" : "maps/testmap1.jpg",
   "npcList" : [
     "Richorn",
     "Madame",
@@ -9,18 +9,26 @@
   ],
 	"childMaps" : [
     {
-      "mapName" : "ATESTMAP_JSON1",
-      "mapInfo" : "Test info1",
-      "imageSrc" : "testImage1.jpg",
+      "mapName" : "Varisia",
+      "mapInfo" : "This is the country map",
+      "imageSrc" : "maps/testmap2.jpg",
       "npcList" : ["bob"],
-      "childMaps" : []
-    },
-    {
-      "mapName" : "BTESTMAP_JSON2",
-      "mapInfo" : "Test info",
-      "imageSrc" : "testImage1.jpg",
-      "npcList" : ["other bob"],
-      "childMaps" : []
+      "childMaps" : [
+        {
+          "mapName" : "Sandpoint",
+          "mapInfo" : "This is the city map",
+          "imageSrc" : "maps/testmap3.1.jpg",
+          "npcList" : ["Ameiko","Everyone else"],
+          "childMaps" : []
+        },
+        {
+          "mapName" : "Magnimar",
+          "mapInfo" : "This is the other city map",
+          "imageSrc" : "maps/testmap3.2.jpg",
+          "npcList" : ["A greedy governor"],
+          "childMaps" : []
+        }
+      ]
     }
 	]
 }
