@@ -89,20 +89,20 @@ var DefaultSidebar = React.createClass({
 	},
 	onDesClick: function() {
 		this.setState({
-			infoPaneContents : <p>{this.props.mapNode.mapInfo}</p>
+			infoPaneContents : <p id="WhiteText">{this.props.mapNode.mapInfo}</p>
 		})
 	},
 	onLocClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap){
-				return <p>{childMap.mapName}</p>;
+				return <p id="WhiteText">{childMap.mapName}</p>;
 			})
 		})
 	},
 	onNpcClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.npcList.map(function(npc){
-				return <p>{npc}</p>;
+				return <p id="WhiteText">{npc}</p>;
 			})
 		})
 	},
@@ -127,7 +127,7 @@ var DefaultSidebar = React.createClass({
 				<div id="locationButton">
 					<button type="button" onClick={this.onLocClick}>Location</button>
 				</div>
-				<div id="npcButton">
+				<div id="NPCButton">
 					<button type="button" onClick={this.onNpcClick}>NPC</button>
 				</div>
 				<div id='options'>
