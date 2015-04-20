@@ -135,22 +135,22 @@ var DefaultSidebar = React.createClass({
 				<div id='infoPane'>
 					{this.state.infoPaneContents}
 				</div>
-				<div id="mapDesButton">
-					<button type="button" onClick={this.onDesClick}>Description</button>
+				<div id="mapDesButton" className="buttonWrapper">
+					<button className="buttonClass" type="button" onClick={this.onDesClick}>Description</button>
 				</div>
-				<div id="locationButton">
-					<button type="button" onClick={this.onLocClick}>Location</button>
+				<div id="locationButton" className="buttonWrapper">
+					<button className="buttonClass" type="button" onClick={this.onLocClick}>Location</button>
 				</div>
-				<div id="NPCButton">
-					<button type="button" onClick={this.onNpcClick}>NPC</button>
+				<div id="NPCButton" className="buttonWrapper">
+					<button className="buttonClass" type="button" onClick={this.onNpcClick}>NPC</button>
 				</div>
 				<div id='options'>
 				</div>
-				<div id='bottomBar'>
-					<button onClick={this.props.parent.addNewLoc}>New</button>
-					<button onClick={this.props.parent.editMap}>Edit</button>
-					<button onClick={this.props.parent.changeLocToParent}>Return</button>
-					<button onClick={this.props.parent.changeLocToRoot}>Root</button>
+				<div id='bottomBar' className="buttonWrapper">
+					<button className="buttonClass" onClick={this.props.parent.addNewLoc}>New</button>
+					<button className="buttonClass" onClick={this.props.parent.editMap}>Edit</button>
+					<button className="buttonClass" onClick={this.props.parent.changeLocToParent}>Return</button>
+					<button className="buttonClass" onClick={this.props.parent.changeLocToRoot}>Root</button>
 				</div>
 			</div>
 		);
