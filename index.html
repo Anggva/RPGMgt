@@ -108,7 +108,7 @@ var DefaultSidebar = React.createClass({
 	onLocClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap,i){
-				return <div><button key={i} id={i} onClick={this.props.parent.changeLoc}>
+				return <div><button className="buttonClass buttonDistance" key={i} id={i} onClick={this.props.parent.changeLoc}>
 					{childMap.mapName}
 				</button><br /></div>;
 			}.bind(this))
@@ -203,17 +203,15 @@ var EditSidebar = React.createClass({
 				</form>
 				<div id="NPCDiv">
 					<input id="npcTxtBox" type="text" /> 
-					<button onClick={this.addNPC}>Add NPC</button>
+					<button id="npcButton" onClick={this.addNPC}>Add NPC</button>
 					<div id="NPCresponse" />
 				</div>
-				<div id="createButton">
-					<input type="submit" value="Confirm" onClick={this.finishEditing}/>
-				</div>
 				<div id="uploadButton">
-					<input id="uploadButton" type="file" value="Upload" onChange={this.upload}/>
+					<input id="uploadButton" className="buttonClass" type="file" value="Upload" onChange={this.upload}/>
 				</div>
-				<div id="backButton">
-					<button onClick={this.goBack}>Back</button>
+				<div id="bottomBar" className="buttonWrapper">
+					<input className="buttonClass genericButton" type="submit" value="Confirm" onClick={this.finishEditing}/>
+					<button className="buttonClass genericButton" onClick={this.goBack}>Back</button>
 				</div>
 			</div>
 		);

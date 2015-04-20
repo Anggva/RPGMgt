@@ -8,6 +8,15 @@ html, body {
 	margin: 0;
 }
 
+.genericButton{
+	position:relative;
+	top: 5%;
+}
+
+.buttonDistance{
+	padding-top: 0px;
+}
+
 .buttonClass{
 	background-color: DarkGoldenRod;
 	border: solid;
@@ -86,35 +95,21 @@ html, body {
     position:absolute;
 }
 
-#backButton {
-	position:absolute;
-    bottom: 55%;
-    right:46%;
-}
 
 #uploadButton {
-	position:absolute;
-    bottom: 70%;
-    right:10%;
-    color: #FFFFFF;
+	position:relative;
+	top: 5%;
+}
+
+#npcButton{
+	position:relative;
+	top: 2%;
 }
 
 #bottomBar1 {
 	position:absolute;
     bottom: 5%;
     right:80%;
-}
-
-#locationButton {
-
-}
-
-#mapDesButton {
-
-}
-
-#NPCButton {
-
 }
 
 #infoPane {
@@ -143,12 +138,6 @@ html, body {
     width: 250px;
 }
 
-#createButton {
-	position:absolute;
-    bottom: 60%;
-    right:43%;
-
-}
 
 #NameDiv {
 	padding: 0 20px;
