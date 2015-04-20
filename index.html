@@ -157,14 +157,14 @@ var EditSidebar = React.createClass({
 		this.props.parent.setState({editingEnabled : false});
 	},
 	upload: function(){
-    	var reader  = new FileReader();
-    	var file    = document.querySelector('input[type=file]').files[0];
-       	reader.onloadend = function () {
-           document.getElementById("mapImage").src = reader.result;
-       	}
-       	if (file) {
-           reader.readAsDataURL(file); //reads the data as a URL
-       	} 	
+		var reader  = new FileReader();
+		var file    = document.querySelector('input[type=file]').files[0];
+		reader.onloadend = function () {
+			this.props.mapToEdit.imageSrc = reader.result;
+		}.bind(this);
+		if (file) {
+			reader.readAsDataURL(file); //reads the data as a URL
+		} 	
 	},
 	nameChange: function(event) {
 		this.setState({Name: event.target.value});
