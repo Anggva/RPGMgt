@@ -108,9 +108,9 @@ var DefaultSidebar = React.createClass({
 	onLocClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap,i){
-				return <div><button className="buttonClass buttonDistance" key={i} id={i} onClick={this.props.parent.changeLoc}>
+				return <div><button className="buttonClass" key={i} id={i} onClick={this.props.parent.changeLoc}>
 					{childMap.mapName}
-				</button><br /></div>;
+				</button><div className="buttonDistance"></div><br /></div>;
 			}.bind(this))
 		})
 	},
@@ -195,14 +195,14 @@ var EditSidebar = React.createClass({
 			<div className='container' id='sidebar'>
 				<form>
 					<div id="NameDiv">
-						<input id="NameTextbox" type="text" placeholder="Map Name" defaultValue={this.props.mapNode.mapName}/>
+						<input className="txtbox" id="NameTextbox" type="text" placeholder="Map Name" defaultValue={this.props.mapNode.mapName}/>
 					</div>
 					<div id="DescDiv">
-						<textarea id="DescTextbox" placeholder="Description" defaultValue={this.props.mapNode.mapInfo}/>
+						<textarea className="txtbox" id="DescTextbox" placeholder="Description" defaultValue={this.props.mapNode.mapInfo}/>
 					</div>
 				</form>
 				<div id="NPCDiv">
-					<input id="npcTxtBox" type="text" /> 
+					<input className="txtbox" id="npcTxtBox" type="text" /> 
 					<button id="npcButton" onClick={this.addNPC}>Add NPC</button>
 					<div id="NPCresponse" />
 				</div>
