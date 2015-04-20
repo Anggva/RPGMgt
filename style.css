@@ -8,18 +8,24 @@ html, body {
 	margin: 0;
 }
 
+.txtbox{
+	background-color: #FFEB99;
+}
+
+
 .genericButton{
 	position:relative;
 	top: 5%;
 }
 
 .buttonDistance{
-	padding-top: 0px;
+	height:1px;
 }
 
 .buttonClass{
 	background-color: DarkGoldenRod;
-	border: solid;
+	border: 1px solid #3D1F00;
+	color: #3D1F00;
   	box-shadow: none;
   	border-radius: 3;
 }
@@ -80,7 +86,7 @@ html, body {
 	width: 100%;
 	font-weight: bold;
 	font-family: 'Playfair Display', serif;
-	color: white;	
+	color: DarkGoldenRod;	
 }
 
 #mapInfo {
@@ -119,21 +125,16 @@ html, body {
 }
 
 #NameTextbox {
-
     height: 20px;
     width: 250px;
-    border: 3px solid #cccccc;
 }
 
 #DescTextbox {
-
     height: 70px;
     width: 250px;
-    border: 3px solid #cccccc;
 }
 
 #NPCTextbox {
-	border: 3px solid #cccccc;
     height: 70px;
     width: 250px;
 }
