@@ -9,13 +9,13 @@
   ],
 	"childMaps" : [
     {
-      "mapName" : "TESTMAP_JSON1",
+      "mapName" : "ATESTMAP_JSON1",
       "mapInfo" : "Test info1",
       "imageSrc" : "testImage1.jpg",
       "childMaps" : []
     },
     {
-      "mapName" : "TESTMAP_JSON2",
+      "mapName" : "BTESTMAP_JSON2",
       "mapInfo" : "Test info",
       "imageSrc" : "testImage1.jpg",
       "childMaps" : []
