@@ -17,8 +17,16 @@ function start() {
 		if (!data || data.Success === false) {
 			window.alert('Error loading map data. Please refresh the page and try again.');
 		} else {
+			setParents(data);
 			React.render(<World rootMap={data} />, document.body);
 		}
+	});
+}
+
+function setParents(currentMap) {
+	currentMap.childMaps.map(function(childMap){
+		childMap.parentMap = currentMap;
+		setParents(childMap);
 	});
 }
 
