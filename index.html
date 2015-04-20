@@ -70,13 +70,18 @@ var MapImage = React.createClass({
 			curDown = false;
 		});
 	},
+	componentWillReceiveProps: function() {
+		$('#mapImage').html("");
+	},
 	render: function() {
 		return(
-			<img id='mapImage' src={this.props.mapNode.imageSrc}>
-				{this.props.mapNode.childMaps.map(function(childMap){
-					return <div id={childMap.mapName} className='mapLoc' onclick='gotoLoc(childMap)' style={childMap.loc} />;
-				})}
-			</img>
+			<img id='mapImage' src={this.props.mapNode.imageSrc} />
+			// Commenting this section out becuase it was causing problems with something else.
+			// Plus it doesnt work anyway
+			//	{this.props.mapNode.childMaps.map(function(childMap){
+			//		return <div id={childMap.mapName} className='mapLoc' onclick='gotoLoc(childMap)' style={childMap.loc} />;
+			//	})}
+			//</img>
 		);
 	}
 });
@@ -89,21 +94,29 @@ var DefaultSidebar = React.createClass({
 	},
 	onDesClick: function() {
 		this.setState({
-			infoPaneContents : <p className="WhiteText">{this.props.mapNode.mapInfo}</p>
+			infoPaneContents : <p>{this.props.mapNode.mapInfo}</p>
 		})
 	},
 	onLocClick: function() {
 		this.setState({
-			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap){
-				return <p className="WhiteText">{childMap.mapName}</p>;
-			})
+			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap,i){
+				return <button key={i} id={i} onClick={this.props.parent.changeLoc}>
+					{childMap.mapName}
+				</button>;
+			}.bind(this))
 		})
 	},
 	onNpcClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.npcList.map(function(npc){
-				return <p className="WhiteText">{npc}</p>;
+				return <p>{npc}</p>;
 			})
+		})
+	},
+	componentWillReceiveProps: function() {
+		console.log("TEST")
+		this.setState({
+			infoPaneContents : <p />
 		})
 	},
 	render: function() {
@@ -127,8 +140,10 @@ var DefaultSidebar = React.createClass({
 				<div id='options'>
 				</div>
 				<div id='bottomBar'>
-					<button onClick={this.props.parent.addNewLoc}>+</button>
+					<button onClick={this.props.parent.addNewLoc}>New</button>
 					<button onClick={this.props.parent.editMap}>Edit</button>
+					<button onClick={this.props.parent.changeLocToParent}>Return</button>
+					<button onClick={this.props.parent.changeLocToRoot}>Root</button>
 				</div>
 			</div>
 		);
@@ -200,11 +215,23 @@ var World = React.createClass({
 			editingEnabled: false
 		}
 	},
-	changeLoc: function(loc) {
-		this.props.currentMap = loc;
+	changeLoc: function(event) {
+		console.log("Changing location.");
+		this.props.currentMap = this.props.currentMap.childMaps[event.target.id];
+		this.forceUpdate();
+	},
+	changeLocToParent: function() {
+		if(this.props.currentMap.parentMap == null)
+			return;
+		this.props.currentMap = this.props.currentMap.parentMap;
+		this.forceUpdate();
+	},
+	changeLocToRoot: function() {
+		this.props.currentMap = this.state.rootMap;
+		this.forceUpdate();
 	},
 	addNewLoc: function() {
-		console.log("+ button pressed");
+		console.log("New map button pressed");
 		this.props.mapToEdit = new MapNode(this.props.currentMap);
 		this.props.currentMap.childMaps.push(this.props.mapToEdit);
 		this.setState({editingEnabled : true});
