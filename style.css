@@ -94,21 +94,14 @@ html, body {
 }
 
 #locationButton {
-	position:absolute;
-    bottom: 60%;
-    right:40%;
+
 }
 
 #mapDesButton {
-	position:absolute;
-    bottom: 65%;
-    right:38%;
+
 }
 
 #NPCButton {
-	position:absolute;
-    bottom: 55%;
-    right:43%;
 
 }
 
