@@ -89,28 +89,22 @@ var DefaultSidebar = React.createClass({
 	},
 	onDesClick: function() {
 		this.setState({
-			infoPaneContents : <p id="WhiteText">{this.props.mapNode.mapInfo}</p>
+			infoPaneContents : <p className="WhiteText">{this.props.mapNode.mapInfo}</p>
 		})
 	},
 	onLocClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.childMaps.map(function(childMap){
-				return <p id="WhiteText">{childMap.mapName}</p>;
+				return <p className="WhiteText">{childMap.mapName}</p>;
 			})
 		})
 	},
 	onNpcClick: function() {
 		this.setState({
 			infoPaneContents : this.props.mapNode.npcList.map(function(npc){
-				return <p id="WhiteText">{npc}</p>;
+				return <p className="WhiteText">{npc}</p>;
 			})
 		})
-	},
-	onLocMouseOver: function(e) {
-
-	},
-	onLocMouseOut: function(e) {
-
 	},
 	render: function() {
 		return (
